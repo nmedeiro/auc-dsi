@@ -1,0 +1,187 @@
+---
+title: "Midlife crisis - Data Analysis"
+author: "Ingo Rohlfing"
+date: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    code_folding: show
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, # show code chunks
+                      error = TRUE, # knit file if error occurs
+                      warning = FALSE) # ignore warnings on R versions
+```
+
+## Loading packages
+Loading packages for data analysis.
+```{r packages, message = F}
+library(devtools) # session info
+library(dplyr) # data wrangling
+library(formattable) # nicer summary tables
+library(ggplot2) # plotting
+library(lfe) # fixed-effects regression
+library(sjPlot) # regression tables and Word export
+library(texreg) # regression table export to LaTeX
+library(xtable) # table export to LaTeX
+```
+
+**Note:** The execution of this script requires that `data_processing.Rmd` 
+is executed first. 
+
+## Country-level analysis
+Loading preprocessed country data.
+```{r}
+country_level <- readRDS(file = "../Data/AnalysisData/country_level.rds")
+```
+
+Descriptive table of countries.
+```{r}
+country_level %>% 
+  mutate(across(c(cm_satis, inc, exp),
+                ~ round(.x, digits = 2))) %>% 
+  # assign informative variable labels
+  rename(`Mean satisfaction` = cm_satis,
+         Income = inc, 
+         Expenditure = exp) %>% 
+  select(-country) -> country_tab
+formattable(country_tab)
+```
+
+```{r, include = F}
+# exporting table to Word
+tab_df(country_tab, 
+       title = "Country means", 
+       col.header = c("Country", "Mean satisfaction", 
+                      "Income", "Expenditure"),
+       file = "../Output/table1_country_means.doc")
+# exporting table to LaTeX
+print(xtable(country_tab, type = "latex"),
+      file = "../Output/table1_country_means.tex")
+```
+
+Scatterplot of mean satisfaction against GDP.
+```{r, fig.width=5, fig.height=5}
+ggplot(data = country_level) +
+  geom_point(mapping = aes(x = inc, y = cm_satis)) +
+  geom_text(mapping = aes(x = inc, y = cm_satis, label = `Country name`),
+             nudge_x = 10000) +
+  ggtitle("Scatterplot of mean satisfaction and GDP/capita") +
+  scale_x_continuous("GDP/capita (current 2006 USD)", 
+                     limits = c(0, 55000)) +
+  scale_y_continuous("Mean satisfaction",
+                     limits = c(4, 7.2),
+                     breaks = seq(4, 7, by = 0.5), 
+                     labels = seq(4, 7, by = 0.5)) +
+  theme_classic()
+```
+
+```{r, include = F}
+# exporting plot
+ggsave("../Output/figure1_cmsatis_inc.png", plot = last_plot(),
+       width = 5, height = 5)
+```
+
+## Individual-level analysis
+Loading individual-level data.
+```{r}
+individual_level <- readRDS(file = "../Data/AnalysisData/individual_level.rds")
+```
+
+OLS regression of satisfaction on age and $age^2$.
+```{r}
+# estimate model
+ind_ols <- lm(satis ~ age + age2, data = individual_level)
+# produce regression table
+tab_model(ind_ols, 
+          digits = 4, show.se = TRUE,
+          dv.labels = "Satisfaction with life (OLS)",
+          pred.labels = c("Intercept", "Age", "Age squared"))
+```
+
+```{r, include = F}
+# exporting table to Word
+tab_model(ind_ols, 
+          dv.labels = "Satisfaction with life (OLS)",
+          pred.labels = c("Intercept", "Age", "Age squared"),
+          file = "../Output/table2_ind_ols.docx") 
+# exporting table to LaTeX
+texreg(ind_ols, 
+       custom.coef.names = c("Intercept", "Age", "Age squared"),
+       caption = "OLS regression",
+       caption.above = TRUE,
+       file = "../Output/table2_ind_ols.tex")
+```
+
+
+OLS regression of satisfaction on age and age squared with country fixed-effects.
+```{r}
+# estimate model
+ind_fe <- felm(satis ~ age + age2 | country, data = individual_level)
+# show regression output
+tab_model(ind_fe, 
+          show.se = TRUE, digits = 4, digits.p = 4,
+          dv.labels = "Satisfaction with life (country FE suppressed)",
+          pred.labels = c("Age", "Age squared"))
+```
+
+```{r, include = F}
+# exporting table to Word
+tab_model(ind_fe, 
+          dv.labels = "Satisfaction with life (country FE suppressed)",
+          pred.labels = c("Age", "Age squared"),
+          file = "../Output/table3_ind_fe.docx") 
+# exporting table to LaTeX
+texreg(ind_fe, 
+       custom.model.names = c("Satisfaction with life (country FE suppressed)"),
+       custom.coef.names = c("Age", "Age squared"),
+       caption = "OLS regression with country fixed-effects",
+       caption.above = TRUE,
+       file = "../Output/table3_ind_fe.tex")
+```
+
+## Reproduction parameters
+Session parameters from last execution of script.
+```{r}
+session_info()
+```
+
+## Software references
+Dahl, David B., David Scott, Charles Roosen, Arni Magnussonm Jonathan Swinton. 
+2019. *xtable: Export Tables to LaTeX or HTML.*  
+<https://CRAN.R-project.org/package=xtable>
+
+Gaure, S. 2021. *lfe: Linear group fixed effects.*
+<https://cran.r-project.org/web/packages/lfe/>
+
+Leifeld, Philip. 2013). *texreg: Conversion of Statistical Model Output in R 
+to LaTeX and HTML Tables.* Journal of Statistical Software, 55(8), 1-24.  
+<http://dx.doi.org/10.18637/jss.v055.i08>
+
+Lüdecke, D. 2021. *sjPlot: Data Visualization for Statistics in Social Science.*
+<https://CRAN.R-project.org/package=sjPlot>
+
+Rodríguez-Sánchez, Francisco, Shaurita D. Hutchins. 2020.  
+*grateful: Facilitate citation of R packages.*  
+<https://github.com/Pakillo/grateful>.
+
+R Core Team. 2020. *R: A Language and Environment for Statistical
+Computing*. Vienna, Austria: R Foundation for Statistical Computing.
+<https://www.R-project.org/>.
+
+Ren, Kun, Kenton Russell. 2016). *formattable: Create 'Formattable' 
+Data Structures.* <https://CRAN.R-project.org/package=formattable>
+
+RStudio Team. 2021. *RStudio: Integrated Development Environment for R.*  
+RStudio, PBC, Boston, MA. <http://www.rstudio.com/>.
+
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2021.
+*dplyr: A Grammar of Data Manipulation*.
+<https://CRAN.R-project.org/package=dplyr>.
+
+Wickham, Hadley, Jim Hester, and Winston Chang. 2020. *devtools: Tools
+to Make Developing R Packages Easier*.
+<https://CRAN.R-project.org/package=devtools>

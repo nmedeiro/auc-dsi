@@ -1,0 +1,175 @@
+---
+title: "Midlife crisis - Data Import"
+author: "Ingo Rohlfing"
+date: ""
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    code_folding: show
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, # show code chunks
+                      error = TRUE, # knit file if error occurs
+                      warnings = TRUE) # ignore warnings on R versions
+```
+
+**Note:** Please read the README file `README.rtf` first for information about
+
+## Loading packages
+Loading packages for data preparation.
+```{r packages, message = F, warning = F}
+library("devtools") # session info
+library("dplyr") # data wrangling
+library("rio") # data import
+library("tidyr") # data wrangling
+```
+
+## Importing and processing datasets
+### WDI data
+Import of original WDI data.
+```{r wdi import}
+wdi_raw <- import("../Data/InputData/original-wdi.xlsx")
+```
+
+Data processing.  
+Removing rows with missings and `SeriesName` because it is redundant. 
+```{r wdi cleaning}
+wdi <- select(wdi_raw, -`Series Name`)
+wdi <- na.omit(wdi)
+```
+
+Preparing data for transformation from long to wide format.
+```{r wdi more cleaning}
+wdi <- wdi %>% 
+  # creating distinction between inc and exp based on "Series Code"
+  mutate(var_no = if_else(`Series Code` == "NE.CON.GOVT.ZS", "exp", "inc")) %>% 
+  # dropping "Series Code" because it is superfluous now
+  select(-`Series Code`) 
+```
+
+Transforming data from long into wide format.
+```{r wdi long to wide}
+wdi <- pivot_wider(wdi, 
+                   values_from = `2002 [YR2002]`, 
+                   names_from = var_no) 
+```
+
+Replacing country codes for preparing merger with Pew data.
+```{r wdi country codes}
+wdi <- wdi %>% 
+  # sentence capitalization
+  rename(`Country name` = `Country Name`) %>% 
+  # generating numeric country codes
+  mutate(country = case_when(
+    `Country Code` == "CHN" ~ 8,
+    `Country Code` == "IND" ~ 17,
+    `Country Code` == "IDN" ~ 18,
+    `Country Code` == "PAK" ~ 27,
+    `Country Code` == "RUS" ~ 31,
+    `Country Code` == "USA" ~ 40,
+    `Country Code` == "JOR" ~ 45
+  )) %>% 
+  # remove "Country Code"
+  select(- `Country Code`) 
+```
+
+Storing processed macro data for later processing.
+```{r wdi save}
+saveRDS(wdi, file = "../Data/TempData/wdi_processed.rds")
+```
+
+### Pew data
+Import of original PEW data.
+```{r pew import}
+pew_raw <- import("../Data/InputData/original-pew.sav")
+```
+
+Selecting relevant variables for merging.
+```{r pew processing}
+pew <- pew_raw %>% 
+  select(country, q2, q74) %>% 
+  rename(satis = q2, # satisfaction (self-report; scale of 0-10)
+         age = q74) # age in years
+```
+
+Recoding variable values for missings to `NA`.
+```{r pew filtering}
+pew <- filter(pew,
+              satis <= 10, # remove misings (11, 12) 
+              age >= 21 & age <= 70) # limit age range, remove missings (98, 99)
+```
+
+Filtering countries with at least 900 observations.
+```{r pew country filter, message = F}
+pew <- pew %>% 
+  group_by(country) %>% 
+  mutate(country_N = n()) %>% # calculate N per country
+  filter(country_N >= 900) %>% # keep countries with at least 900 observations
+  select(-country_N) # remove country_N again 
+```
+
+Creating variable for later analysis.
+```{r pew age2}
+pew <- mutate(pew, age2 = age*age) # square age for later analysis
+```
+
+Storing processed macro data for later processing.
+```{r pew save}
+saveRDS(pew, file = "../Data/TempData/pew_processed.rds")
+```
+
+### Merging and storing analysis datasets
+Merging WDI data into Pew data to create *individual-level* dataset and storing 
+data for later analysis.
+```{r merge, warning = F}
+# merging data
+individual_level <- inner_join(pew, wdi, by = c("country")) 
+# storing data
+saveRDS(individual_level, file = "../Data/AnalysisData/individual_level.rds")
+```
+
+Creating *country-level* dataset with mean values for all variables.
+```{r country means}
+# calculating means
+country_level <- individual_level %>% 
+  group_by(`Country name`) %>% 
+  summarize(cm_satis = mean(satis),
+            inc = mean(inc),
+            exp = mean(exp),
+            country = mean(country)) 
+# storing data
+saveRDS(country_level, file = "../Data/AnalysisData/country_level.rds")
+```
+
+## Reproduction parameters
+Session parameters from last execution of script.
+```{r session info, echo = F}
+session_info()
+```
+
+## Software references
+Chan, Chung-hong, Geoffrey CH Chan, Thomas J. Leeper, and Jason Becker.
+2021. *rio: A Swiss-Army Knife for Data File I/O*.  
+<https://cran.r-project.org/web/packages/rio/>
+
+Rodríguez-Sánchez, Francisco, Shaurita D. Hutchins (2020).  
+*grateful: Facilitate citation of R packages.*  
+<https://github.com/Pakillo/grateful>.
+
+R Core Team. 2020. *R: A Language and Environment for Statistical
+Computing*. Vienna, Austria: R Foundation for Statistical Computing.
+<https://www.R-project.org/>.
+
+RStudio Team (2021). *RStudio: Integrated Development Environment for R.*  
+RStudio, PBC, Boston, MA. <http://www.rstudio.com/>.
+
+Wickham, Hadley, Romain François, Lionel Henry, and Kirill Müller. 2021.
+*dplyr: A Grammar of Data Manipulation*.
+<https://CRAN.R-project.org/package=dplyr>.
+
+Wickham, Hadley, Jim Hester, and Winston Chang. 2020. *devtools: Tools
+to Make Developing R Packages Easier*.
+<https://CRAN.R-project.org/package=devtools>

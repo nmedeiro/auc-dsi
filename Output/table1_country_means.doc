@@ -1,0 +1,52 @@
+<table style="border-collapse:collapse; border:none;">
+<caption style="font-weight: bold; text-align:left;">Country means</caption>
+<tr>
+<th style="border-top: double; text-align:center; font-style:italic; font-weight:normal; padding:0.2cm; border-bottom:1px solid black; text-align:left; ">Country</th>
+<th style="border-top: double; text-align:center; font-style:italic; font-weight:normal; padding:0.2cm; border-bottom:1px solid black; ">Mean satisfaction</th>
+<th style="border-top: double; text-align:center; font-style:italic; font-weight:normal; padding:0.2cm; border-bottom:1px solid black; ">Income</th>
+<th style="border-top: double; text-align:center; font-style:italic; font-weight:normal; padding:0.2cm; border-bottom:1px solid black; ">Expenditure</th>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">China</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">5.17</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">1135.45</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">15.59</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">India</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">5.09</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">486.64</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">11.89</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Indonesia</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">5.76</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">909.89</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">7.26</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Jordan</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">5.34</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">1901.58</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">22.70</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Pakistan</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">5.47</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">483.03</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">8.72</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Russian Federation</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">4.74</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">2375.16</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; ">17.95</td>
+</tr>
+<tr>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; border-bottom: double; ">United States</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; border-bottom: double; ">7.02</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; border-bottom: double; ">38175.38</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center; border-bottom: double; ">15.04</td>
+</tr>
+</table>
+

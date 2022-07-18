@@ -1,0 +1,204 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0 \fswiss Helvetica;}{\f1 Courier;}}
+{\colortbl;\red255\green0\blue0;\red0\green0\blue255;}
+\widowctrl\hyphauto
+
+{\pard \qc \f0 \sa180 \li0 \fi0 \b \fs36 README - Midlife Crisis\par}
+{\pard \qc \f0 \sa180 \li0 \fi0  Ingo Rohlfing\par}
+{\pard \qc \f0 \sa180 \li0 \fi0  2021-07-02\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Folder structure and files\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 This is the README file for all material on the R Markdown implementation of the Midlife Crisis project. The material is organized into three folders. The README file is on the top level of folder structure.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b Note on working directories} When the master script {\f1 master.R} is executed, the working directory needs to be set to the folder {\f1 ScriptsAndReports} hosting {\f1 master.R}.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 When individual {\f1 .Rmd} files are knitted or selected code chunks are executed, the {\f1 .Rmd} file quietly uses the working directory hosting the file in the background and does not change the working directory.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 Information about files and folders:\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\f1 README.Rmd}: README file for entire project (this one)\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\f1 README.rtf}: README file as rtf produced with {\f1 README.Rmd}\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\f1 Data}: Stores data prepared for analysis in three subfolders\par}
+{\pard \ql \f0 \sa0 \li720 \fi-360 \endash \tx360\tab {\f1 InputData}: Stores original raw data\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab {\f1 original-wdi.xlsx}: Original WDI country data\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab {\f1 original-pew.sav}: Original PEW survey data\sa180\par}
+{\pard \ql \f0 \sa0 \li720 \fi-360 \endash \tx360\tab {\f1 TempData}: Stores intermediate data for further processing\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab {\f1 pew_processed.rds}\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab {\f1 wdi_processed.rds}\sa180\par}
+{\pard \ql \f0 \sa0 \li720 \fi-360 \endash \tx360\tab {\f1 AnalysisData}: Stores data produced in the analysis\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab {\f1 country_level.rds}: Data for country-level analysis\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab {\f1 individual_level.rds}: Data for individual-level analysis\sa180\sa180\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\f1 Output}: Stores all output exported by analysis scripts\par}
+{\pard \ql \f0 \sa0 \li720 \fi-360 \endash \tx360\tab Tables are stored in Word and LaTeX format to be included in Word and LaTeX papers\sa180\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab {\f1 ScriptsAndReports}: Stores all scripts and codebook\par}
+{\pard \ql \f0 \sa0 \li720 \fi-360 \endash \tx360\tab {\f1 master.R}: Master script executing all other scripts.\par}
+{\pard \ql \f0 \sa0 \li720 \fi-360 \endash \tx360\tab {\f1 data_processing.Rmd}:\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab Loads data from {\f1 InputData}\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab Stores data in {\f1 TempData} and {\f1 AnalysisData}\sa180\par}
+{\pard \ql \f0 \sa0 \li720 \fi-360 \endash \tx360\tab {\f1 data_processing.html}: R Markdown html report for {\f1 data_processing.Rmd}\par}
+{\pard \ql \f0 \sa0 \li720 \fi-360 \endash \tx360\tab {\f1 data_analysis.Rmd}:\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab Loads data from {\f1 AnalysisData}\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab Stores output (figures, tables) in {\f1 ScriptsAndResults}\par}
+{\pard \ql \f0 \sa0 \li1080 \fi-360 \bullet \tx360\tab {\f1 data_analysis.html}: R Markdown html report for {\f1 data_analysis.Rmd}\sa180\par}
+{\pard \ql \f0 \sa0 \li720 \fi-360 \endash \tx360\tab {\f1 data_paper.Rmd}: File for producing a paper with tables and figures and no code.\par}
+{\pard \ql \f0 \sa0 \li720 \fi-360 \endash \tx360\tab {\f1 data_paper.PDF}: PDF produced with {\f1 data_paper.Rmd}\sa180\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Reproduction parameters\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 The system parameters and package versions for {\f1 knitr} and {\f1 rmarkdown} (used for all scripts) at the last execution of the script ({\f1 r}Sys.time()`):\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab platform: x86_64-w64-mingw32\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab R version: R version 4.0.3 (2020-10-10)\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab RStudio: 1.4.1106\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab knitr: 1.30\par}
+{\pard \ql \f0 \sa0 \li360 \fi-360 \bullet \tx360\tab rmarkdown: 2.7\sa180\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \b \fs32 Package versions used in scripts\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 If you want to use the same versions of the packages that are loaded with the {\f1 library()} commands, you first need the {\f1 devtools} package (we used 2.3.2 & 2.4.0). With this package, one can install older versions from CRAN. The current versions of the packages, if they have been installed before, {\i will be replaced} if the specified versions are installed in the R library.\line For information on the version of all packages that {\f1 devtools} includes in the {\f1 session_info()}, see the html-reports of the Rmd-scripts.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b data_processing.Rmd}:\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 install_version("dplyr", version = "1.0.5", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("rio", version = "0.5.26", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("tidyr", version = "1.1.2", \line
+                repos = "http://cran.us.r-project.org")\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b data_analysis.Rmd}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 install_version("dplyr", version = "1.0.5", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("formattable", version = "0.2.0.1", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("ggplot2", version = "3.3.2", # 3.3.3 works too\line
+                repos = "http://cran.us.r-project.org")\line
+install_version("lfe", version = "2.8-6", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("sjPlot", version = "2.8.7", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("texreg", version = "1.37.5", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("xtable", version = "1.8-4", \line
+                repos = "http://cran.us.r-project.org")\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b data_appendix.Rmd}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 install_version("dplyr", version = "1.0.5", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("formattable", version = "0.2.0.1", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("ggplot2", version = "3.3.2", # 3.3.3 works too\line
+                repos = "http://cran.us.r-project.org")\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 {\b data_paper.Rmd}\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 install_version("dplyr", version = "1.0.5", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("formattable", version = "0.2.0.1", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("ggplot2", version = "3.3.2",  # 3.3.3 works too\line
+                repos = "http://cran.us.r-project.org")\line
+install_version("knitr", version = "1.30", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("lfe", version = "2.8-6", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("sjPlot", version = "2.8.7", \line
+                repos = "http://cran.us.r-project.org")\line
+install_version("texreg", version = "1.37.5", \line
+                repos = "http://cran.us.r-project.org")\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 All session parameters from last execution of script.\par}
+{\pard \ql \f0 \sa180 \li0 \fi0 \f1 ## - Session info ------------------------------------------------------------------------------------------\line
+##  setting  value                       \line
+##  version  R version 4.0.3 (2020-10-10)\line
+##  os       Windows 10 x64              \line
+##  system   x86_64, mingw32             \line
+##  ui       RStudio                     \line
+##  language (EN)                        \line
+##  collate  German_Germany.1252         \line
+##  ctype    German_Germany.1252         \line
+##  tz       Europe/Berlin               \line
+##  date     2021-07-02                  \line
+## \line
+## - Packages ----------------------------------------------------------------------------------------------\line
+##  package      * version date       lib source        \line
+##  assertthat     0.2.1   2019-03-21 [1] CRAN (R 4.0.0)\line
+##  backports      1.1.10  2020-09-15 [1] CRAN (R 4.0.2)\line
+##  bayestestR     0.8.0   2020-12-05 [1] CRAN (R 4.0.3)\line
+##  boot           1.3-25  2020-04-26 [2] CRAN (R 4.0.3)\line
+##  broom          0.7.6   2021-04-05 [1] CRAN (R 4.0.5)\line
+##  callr          3.6.0   2021-03-28 [1] CRAN (R 4.0.4)\line
+##  cli            2.3.1   2021-02-23 [1] CRAN (R 4.0.4)\line
+##  coda           0.19-4  2020-09-30 [1] CRAN (R 4.0.2)\line
+##  colorspace     1.4-1   2019-03-18 [1] CRAN (R 4.0.0)\line
+##  crayon         1.4.1   2021-02-08 [1] CRAN (R 4.0.4)\line
+##  DBI            1.1.0   2019-12-15 [1] CRAN (R 4.0.0)\line
+##  desc           1.2.0   2018-05-01 [1] CRAN (R 4.0.0)\line
+##  devtools     * 2.3.2   2020-09-18 [1] CRAN (R 4.0.2)\line
+##  digest         0.6.27  2020-10-24 [1] CRAN (R 4.0.4)\line
+##  dplyr        * 1.0.5   2021-03-05 [1] CRAN (R 4.0.5)\line
+##  effectsize     0.4.3   2021-01-18 [1] CRAN (R 4.0.3)\line
+##  ellipsis       0.3.1   2020-05-15 [1] CRAN (R 4.0.0)\line
+##  emmeans        1.5.3   2020-12-09 [1] CRAN (R 4.0.3)\line
+##  estimability   1.3     2018-02-11 [1] CRAN (R 4.0.3)\line
+##  evaluate       0.14    2019-05-28 [1] CRAN (R 4.0.0)\line
+##  fansi          0.4.1   2020-01-08 [1] CRAN (R 4.0.0)\line
+##  farver         2.0.3   2020-01-16 [1] CRAN (R 4.0.0)\line
+##  formattable  * 0.2.0.1 2016-08-05 [1] CRAN (R 4.0.0)\line
+##  Formula        1.2-3   2018-05-03 [1] CRAN (R 4.0.0)\line
+##  fs             1.4.2   2020-06-30 [1] CRAN (R 4.0.2)\line
+##  generics       0.0.2   2018-11-29 [1] CRAN (R 4.0.0)\line
+##  ggeffects      1.0.1   2020-12-14 [1] CRAN (R 4.0.3)\line
+##  ggplot2      * 3.3.3   2020-12-30 [1] CRAN (R 4.0.5)\line
+##  glue           1.4.2   2020-08-27 [1] CRAN (R 4.0.2)\line
+##  gtable         0.3.0   2019-03-25 [1] CRAN (R 4.0.0)\line
+##  highr          0.8     2019-03-20 [1] CRAN (R 4.0.0)\line
+##  htmltools      0.5.0   2020-06-16 [1] CRAN (R 4.0.2)\line
+##  htmlwidgets    1.5.3   2020-12-10 [1] CRAN (R 4.0.4)\line
+##  httr           1.4.2   2020-07-20 [1] CRAN (R 4.0.2)\line
+##  insight        0.12.0  2021-01-14 [1] CRAN (R 4.0.3)\line
+##  jsonlite       1.7.2   2020-12-09 [1] CRAN (R 4.0.5)\line
+##  knitr          1.30    2020-09-22 [1] CRAN (R 4.0.2)\line
+##  labeling       0.3     2014-08-23 [1] CRAN (R 4.0.0)\line
+##  lattice        0.20-41 2020-04-02 [2] CRAN (R 4.0.3)\line
+##  lfe          * 2.8-6   2021-01-11 [1] CRAN (R 4.0.3)\line
+##  lifecycle      1.0.0   2021-02-15 [1] CRAN (R 4.0.5)\line
+##  lme4           1.1-23  2020-04-07 [1] CRAN (R 4.0.2)\line
+##  magrittr       2.0.1   2020-11-17 [1] CRAN (R 4.0.5)\line
+##  MASS           7.3-53  2020-09-09 [2] CRAN (R 4.0.3)\line
+##  Matrix       * 1.2-18  2019-11-27 [2] CRAN (R 4.0.3)\line
+##  memoise        1.1.0   2017-04-21 [1] CRAN (R 4.0.0)\line
+##  minqa          1.2.4   2014-10-09 [1] CRAN (R 4.0.2)\line
+##  modelr         0.1.8   2020-05-19 [1] CRAN (R 4.0.3)\line
+##  munsell        0.5.0   2018-06-12 [1] CRAN (R 4.0.0)\line
+##  mvtnorm        1.1-1   2020-06-09 [1] CRAN (R 4.0.0)\line
+##  nlme           3.1-149 2020-08-23 [2] CRAN (R 4.0.3)\line
+##  nloptr         1.2.2.2 2020-07-02 [1] CRAN (R 4.0.2)\line
+##  parameters     0.11.0  2021-01-15 [1] CRAN (R 4.0.3)\line
+##  performance    0.6.1   2020-12-09 [1] CRAN (R 4.0.3)\line
+##  pillar         1.4.6   2020-07-10 [1] CRAN (R 4.0.2)\line
+##  pkgbuild       1.1.0   2020-07-13 [1] CRAN (R 4.0.2)\line
+##  pkgconfig      2.0.3   2019-09-22 [1] CRAN (R 4.0.0)\line
+##  pkgload        1.1.0   2020-05-29 [1] CRAN (R 4.0.0)\line
+##  prettyunits    1.1.1   2020-01-24 [1] CRAN (R 4.0.0)\line
+##  processx       3.5.1   2021-04-04 [1] CRAN (R 4.0.5)\line
+##  ps             1.6.0   2021-02-28 [1] CRAN (R 4.0.5)\line
+##  purrr          0.3.4   2020-04-17 [1] CRAN (R 4.0.0)\line
+##  R6             2.4.1   2019-11-12 [1] CRAN (R 4.0.0)\line
+##  Rcpp           1.0.4.6 2020-04-09 [1] CRAN (R 4.0.0)\line
+##  remotes        2.3.0   2021-04-01 [1] CRAN (R 4.0.5)\line
+##  rlang          0.4.10  2020-12-30 [1] CRAN (R 4.0.4)\line
+##  rmarkdown      2.7     2021-02-19 [1] CRAN (R 4.0.3)\line
+##  rprojroot      1.3-2   2018-01-03 [1] CRAN (R 4.0.0)\line
+##  rsconnect      0.8.16  2019-12-13 [1] CRAN (R 4.0.2)\line
+##  rstudioapi     0.11    2020-02-07 [1] CRAN (R 4.0.0)\line
+##  sandwich       2.5-1   2019-04-06 [1] CRAN (R 4.0.0)\line
+##  scales         1.1.1   2020-05-11 [1] CRAN (R 4.0.0)\line
+##  sessioninfo    1.1.1   2018-11-05 [1] CRAN (R 4.0.0)\line
+##  sjlabelled     1.1.7   2020-09-24 [1] CRAN (R 4.0.2)\line
+##  sjmisc         2.8.5   2020-05-28 [1] CRAN (R 4.0.2)\line
+##  sjPlot       * 2.8.7   2021-01-10 [1] CRAN (R 4.0.3)\line
+##  sjstats        0.18.1  2021-01-09 [1] CRAN (R 4.0.3)\line
+##  statmod        1.4.35  2020-10-19 [1] CRAN (R 4.0.3)\line
+##  stringi        1.5.3   2020-09-09 [1] CRAN (R 4.0.3)\line
+##  stringr        1.4.0   2019-02-10 [1] CRAN (R 4.0.0)\line
+##  testthat       3.0.2   2021-02-14 [1] CRAN (R 4.0.5)\line
+##  texreg       * 1.37.5  2020-06-18 [1] CRAN (R 4.0.2)\line
+##  tibble         3.0.4   2020-10-12 [1] CRAN (R 4.0.3)\line
+##  tidyr          1.1.2   2020-08-27 [1] CRAN (R 4.0.3)\line
+##  tidyselect     1.1.0   2020-05-11 [1] CRAN (R 4.0.0)\line
+##  usethis      * 1.6.3   2020-09-17 [1] CRAN (R 4.0.2)\line
+##  utf8           1.1.4   2018-05-24 [1] CRAN (R 4.0.0)\line
+##  vctrs          0.3.6   2020-12-17 [1] CRAN (R 4.0.4)\line
+##  withr          2.3.0   2020-09-22 [1] CRAN (R 4.0.2)\line
+##  xfun           0.22    2021-03-11 [1] CRAN (R 4.0.5)\line
+##  xtable       * 1.8-4   2019-04-21 [1] CRAN (R 4.0.0)\line
+##  yaml           2.2.1   2020-02-01 [1] CRAN (R 4.0.2)\line
+##  zoo            1.8-8   2020-05-02 [1] CRAN (R 4.0.0)\line
+## \line
+## [1] C:/Users/Ingo R/Documents/R/win-library/4.0\line
+## [2] C:/Program Files/R/R-4.0.3/library\par}
+}

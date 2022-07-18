@@ -1,0 +1,170 @@
+---
+title: "Midlife Crisis - Data appendix"
+author: "Ingo Rohlfing"
+date: "`r Sys.time()`"
+output: html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, # show code chunks
+                      error = FALSE, # knit file if error occurs
+                      warning = FALSE) # ignore warnings on R versions
+```
+
+```{r, include = F, message = FALSE}
+library(devtools)
+library(dplyr)
+library(formattable)
+library(ggplot2)
+```
+
+
+## Individual-level analysis data set (`individual_level.rds`) 
+```{r, echo = F}
+individual_level <- readRDS(file = "../Data/AnalysisData/individual_level.rds")
+```
+
+The individual-level data set contains observations representing `r nrow(individual_level)` individuals from `r length(unique(individual_level$country))` countries. 
+
+The distribution of observations across countries is as follows:
+```{r}
+individual_level %>% 
+  group_by(`Country name`) %>% 
+  tally() %>% 
+  formattable()
+```
+
+The individual-level data set contains two individual-level variables:
+
+- `satis`  
+- `age`
+
+Definitions, summary statistics and illustrations of the distributions of those two variables are shown below. 
+
+Variable name: `satis`   
+Source: Pew data set   
+Values: Integers from 0 through 10 
+Coding: Respondent's assessment of her/his overall satisfaction with life on a scale of 0 (least 
+satisfied) to 10 (most satisfied) 
+
+Distribution of frequencies.
+```{r}
+individual_level %>% 
+  group_by(satis) %>% 
+  tally() %>% 
+  knitr::kable(col.names = c("Satisfaction score", "Frequency"),
+               caption = "Table 1: Frequency of satisfaction scores")
+```
+
+```{r}
+ggplot(data = individual_level) +
+  geom_bar(aes(x = satis, y = ..count../nrow(individual_level))) +
+  scale_y_continuous("Share of score") +
+  scale_x_continuous("Satisfaction score",
+                     breaks = seq(0, 10, by = 1)) +
+  ggtitle("Share of satisfaction score") +
+  theme_classic()
+```
+
+Variable name: `age`  
+Source: Pew data set  
+Values: Positive integers  
+Coding: Respondent's age in years at last birthday  
+
+```{r, echo = F}
+summary(individual_level$age)
+```
+
+```{r}
+ggplot(data = individual_level) +
+  geom_histogram(aes(x = age), binwidth = 1, boundary = 0,
+                 fill = "white", color = "black") +
+  scale_x_continuous("Age") +
+  scale_y_continuous("Frequency") +
+  ggtitle("Histogram of age (in years)") +
+  theme_classic()
+```
+
+## Country-level analysis data set (`country_analysis.rds`) 
+```{r, echo = F}
+country_level <- readRDS(file = "../Data/AnalysisData/country_level.rds")
+```
+
+The country-level data set contains one observation for each of the 
+`r nrow(country_level)` countries included in the individual-level data set. 
+
+The country-level data set contains three variables: 
+
+- `cm_satis`
+- `inc`
+- `exp`
+
+Definitions, summary statistics and illustrations of the distributions of those 
+three variables are shown below. 
+
+Variable name: `cm_satis`  
+Source: Pew data set  
+Values: Real numbers from 0 through 10  
+Definition:  Mean value of `satis` for all respondents from the country  
+
+```{r, echo = F}
+summary(country_level$cm_satis)
+```
+
+```{r}
+ggplot(data = country_level) +
+  geom_point(aes(x = 1, y = cm_satis)) +
+  scale_y_continuous("Mean satisfaction score", limits = c(0, 7.5),
+                     breaks = seq(0, 7, by = 1)) +
+  scale_x_continuous("", breaks = NULL) +
+  ggtitle("Distribution of mean satisfaction scores") +
+  theme_classic()
+```
+
+
+Variable name: `exp`  
+Source: WDI  
+Values: Positive real numbers  
+Definition: General government consumption expenditure for 2002, as a percentage
+of GDP  
+
+```{r, echo = F}
+summary(country_level$exp)
+```
+
+```{r}
+ggplot(data = country_level) +
+  geom_point(aes(x = 1, y = exp)) +
+  scale_y_continuous("Government consumption expenditure",
+                     limits = c(0, 25)) +
+  scale_x_continuous("", breaks = NULL) +
+  ggtitle("Distribution of government consumption expenditure") +
+  theme_classic()
+```
+
+Variable name: `inc`  
+Source: WDI  
+Values: Positive real numbers  
+Definition: Income per capita for 2002, current US dollars  
+
+```{r}
+summary(country_level$inc)
+```
+
+```{r}
+ggplot(data = country_level) +
+  geom_point(aes(x = 1, y = inc)) +
+  scale_y_continuous("Income per capita",
+                     limits = c(0, 40000)) +
+  scale_x_continuous("", breaks = NULL) +
+  ggtitle("Distribution of income per capita (2002, current USD)") +
+  theme_classic()
+```
+
+## Reproduction parameters
+Session parameters from last execution of script.
+```{r}
+session_info()
+```
+
+ 
